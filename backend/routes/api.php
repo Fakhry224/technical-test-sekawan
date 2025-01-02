@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\ServiceScheduleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
@@ -14,10 +15,9 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/register', [RegisteredUserController::class, 'store']);
-Route::post('/login', [AuthenticatedSessionController::class, 'store']);
-
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth:sanctum');
+Route::post('/signup', [AuthController::class, 'signup']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
 
 // Route::apiResource('users', UserController::class);
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -37,4 +37,5 @@ Route::middleware(['check.employee'])->group(function () {
     Route::get('/vehicle-orders/employee/{employeeId}', [VehicleOrderController::class, 'showByEmployeeId']);
     Route::apiResource('service-schedules', ServiceScheduleController::class);
     Route::apiResource('users', UserController::class);
+    Route::apiResource('offices', OfficeController::class);
 });

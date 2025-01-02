@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   LineChart,
   Line,
@@ -9,32 +9,60 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const Tabs = () => {
+const Tabs = ({ orders }) => {
   const [activeTab, setActiveTab] = useState("day");
 
-  // Dummy data untuk grafik
-  const data = {
-    day: [
-      { name: "Mon", value: 10 },
-      { name: "Tue", value: 15 },
-      { name: "Wed", value: 20 },
-      { name: "Thu", value: 25 },
-      { name: "Fri", value: 30 },
-    ],
-    month: [
-      { name: "Jan", value: 100 },
-      { name: "Feb", value: 120 },
-      { name: "Mar", value: 150 },
-      { name: "Apr", value: 200 },
-      { name: "May", value: 250 },
-    ],
-    year: [
-      { name: "2020", value: 500 },
-      { name: "2021", value: 700 },
-      { name: "2022", value: 900 },
-      { name: "2023", value: 1200 },
-    ],
-  };
+  // Proses data dari API orders untuk setiap tab
+  const chartData = useMemo(() => {
+    if (!orders || orders.length === 0) return { day: [], month: [], year: [] };
+
+    // Konversi `usage_date` menjadi objek Date untuk diproses
+    const parsedOrders = orders.map((order) => {
+      const usageDate = new Date(order.usage_date);
+      return {
+        ...order,
+        day: usageDate.toLocaleDateString("en-US", { weekday: "short" }), // Contoh: "Mon", "Tue"
+        month: usageDate.toLocaleDateString("en-US", { month: "short" }), // Contoh: "Jan", "Feb"
+        year: usageDate.getFullYear(), // Contoh: 2025
+      };
+    });
+
+    // Data tab "day" - jumlah order berdasarkan hari
+    const dayData = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
+      (day) => ({
+        name: day,
+        value: parsedOrders.filter((order) => order.day === day).length,
+      })
+    );
+
+    // Data tab "month" - jumlah order berdasarkan bulan
+    const monthData = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ].map((month) => ({
+      name: month,
+      value: parsedOrders.filter((order) => order.month === month).length,
+    }));
+
+    // Data tab "year" - jumlah order berdasarkan tahun
+    const years = [...new Set(parsedOrders.map((order) => order.year))]; // Ambil tahun unik
+    const yearData = years.map((year) => ({
+      name: year.toString(),
+      value: parsedOrders.filter((order) => order.year === year).length,
+    }));
+
+    return { day: dayData, month: monthData, year: yearData };
+  }, [orders]);
 
   const tabs = [
     { id: "day", label: "Day" },
@@ -64,7 +92,7 @@ const Tabs = () => {
       {/* Tab Content (Chart) */}
       <div className="mt-4">
         <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={data[activeTab]}>
+          <LineChart data={chartData[activeTab]}>
             <CartesianGrid stroke="#ccc" />
             <XAxis dataKey="name" />
             <YAxis />

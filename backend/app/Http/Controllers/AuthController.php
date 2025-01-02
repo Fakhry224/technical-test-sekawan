@@ -2,65 +2,78 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    // Signup
+    public function signup(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|unique:users,email',
-            'password' => 'required|min:8|confirmed'
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+            'role' => 'required|in:Admin,Approver,Normal User', // Validasi role
+            'employee_id' => 'nullable|exists:employees,employee_id', // Validasi relasi employee_id
         ]);
 
         $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => $validated['password']
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password), // Enkripsi password
+            'role' => $request->role,
+            'employee_id' => $request->employee_id,
         ]);
 
         return response()->json([
-            'message' => 'User registered successfully',
+            'message' => 'Signup successful!',
             'user' => $user,
         ], 201);
     }
 
+
+    // Login
     public function login(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required',
+            'password' => 'required|string',
         ]);
 
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+            // Ambil user yang berhasil login
+            $user = Auth::user();
 
             return response()->json([
-                'message' => 'Login successful',
-                'user' => Auth::user(),
-            ], 200);
+                'message' => 'Login successful!',
+                'user' => [
+                    'id' => $user->user_id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'role' => $user->role,
+                    'employee_id' => $user->employee_id,
+                ],
+            ]);
         }
 
         return response()->json([
-            'message' => 'Invalid email or password',
+            'message' => 'Invalid credentials!',
         ], 401);
     }
 
-    public function logout(Request $request)
+
+    // Logout
+    public function logout()
     {
         Auth::logout();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
         return response()->json([
-            'message' => 'Logged out successfully',
-        ], 200);
+            'message' => 'Logged out successfully!',
+        ]);
     }
 }
