@@ -13,7 +13,7 @@ import {
   FaTimes,
 } from "react-icons/fa";
 
-const Sidebar = () => {
+const Sidebar = ({ role }) => {
   const router = useRouter();
   const [activeMenu, setActiveMenu] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -21,8 +21,6 @@ const Sidebar = () => {
   useEffect(() => {
     setActiveMenu(router.pathname);
   }, [router.pathname]);
-
-  const role = "Approver";
 
   let menuItems = [];
 

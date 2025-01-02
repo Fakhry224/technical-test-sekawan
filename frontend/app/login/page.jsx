@@ -6,36 +6,35 @@ import React, { useState } from "react";
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
-  const [showPassword, setShowPassword] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const users = [
+    { email: "approver2@example.com", password: "18p3Wj8vbwEK" },
+    { email: "approver1@example.com", password: "wv2HEiVSY3fq" },
+    { email: "admin@example.com", password: "wMk0A8UsovPa" },
+  ];
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError(null);
 
-    try {
-      const response = await fetch("http://localhost:8000/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+    const user = users.find(
+      (u) => u.email === formData.email && u.password === formData.password
+    );
 
-      const data = await response.json();
-
-      if (response.ok) {
-        alert("Login successful!");
-        window.location.href = "/";
+    if (user) {
+      alert("Login successful!");
+      if (user.email === "admin@example.com") {
+        window.location.href = "/admin";
       } else {
-        setError(data.message || "Login failed!");
+        window.location.href = "/approver";
       }
-    } catch (error) {
-      console.error("Error during login:", error);
-      setError("An error occurred. Please try again.");
+    } else {
+      setError("Invalid email or password!");
     }
   };
 
