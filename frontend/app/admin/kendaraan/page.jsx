@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Navbar from "../(components)/Navbar";
-import Sidebar from "../(components)/Sidebar";
+import Header from "../../(components)/Header";
+import Sidebar from "../../(components)/Sidebar";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -41,7 +41,7 @@ const KendaraanPage = () => {
 
   return (
     <>
-      <Navbar />
+      <Header />
       <div className="flex flex-col md:flex-row gap-4 md:gap-10 p-4 md:p-10">
         <Sidebar />
         <div className="flex flex-col gap-10 w-full">

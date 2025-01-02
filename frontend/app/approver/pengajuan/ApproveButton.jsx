@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 
 import Image from "next/image";
-import ConfirmDialog from "../(components)/ConfirmDialog";
+import ConfirmDialog from "../../(components)/ConfirmDialog";
 
 export default function ApproveButton() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);

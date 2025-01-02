@@ -22,13 +22,24 @@ const Sidebar = () => {
     setActiveMenu(router.pathname);
   }, [router.pathname]);
 
-  const menuItems = [
-    { name: "Dashboard", icon: <FaTachometerAlt />, url: "/" },
-    { name: "Kendaraan", icon: <FaCar />, url: "/kendaraan" },
-    { name: "Pemesanan", icon: <FaCalendarAlt />, url: "/pemesanan" },
-    { name: "Pengguna", icon: <FaUsers />, url: "/pengguna" },
-    { name: "Laporan", icon: <FaFileAlt />, url: "/laporan" },
-  ];
+  const role = "Approver";
+
+  let menuItems = [];
+
+  if (role === "Admin") {
+    menuItems = [
+      { name: "Dashboard", icon: <FaTachometerAlt />, url: "/" },
+      { name: "Kendaraan", icon: <FaCar />, url: "/admin/kendaraan" },
+      { name: "Pemesanan", icon: <FaCalendarAlt />, url: "/admin/pemesanan" },
+      { name: "Laporan", icon: <FaFileAlt />, url: "/laporan" },
+    ];
+  } else if (role === "Approver") {
+    menuItems = [
+      { name: "Dashboard", icon: <FaTachometerAlt />, url: "/" },
+      { name: "Pengajuan", icon: <FaCar />, url: "/approver/pengajuan" },
+      { name: "Laporan", icon: <FaFileAlt />, url: "/laporan" },
+    ];
+  }
 
   return (
     <div>

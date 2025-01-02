@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Navbar from "../(components)/Navbar";
-import Sidebar from "../(components)/Sidebar";
+import Header from "../../(components)/Header";
+import Sidebar from "../../(components)/Sidebar";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -39,7 +39,7 @@ const PemesananPage = () => {
 
   return (
     <>
-      <Navbar />
+      <Header />
       <div className="flex flex-col lg:flex-row p-4 lg:p-10 gap-6 lg:gap-10">
         <Sidebar />
         <div className="flex flex-col gap-6 lg:gap-10 w-full">

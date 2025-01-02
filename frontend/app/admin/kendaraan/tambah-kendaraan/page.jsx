@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Navbar from "../../(components)/Navbar";
-import Sidebar from "../../(components)/Sidebar";
+import Header from "../../../(components)/Header";
+import Sidebar from "../../../(components)/Sidebar";
 import InputForm from "./InputForm";
 import Image from "next/image";
 
@@ -35,7 +35,7 @@ const KendaraanForm = () => {
 
   return (
     <>
-      <Navbar />
+      <Header />
       <div className="flex flex-col lg:flex-row p-4 sm:p-8 lg:p-10 gap-6 lg:gap-10">
         <Sidebar />
         <div className="flex flex-col bg-green-5 rounded-3xl drop-shadow-lg p-6 sm:p-8 lg:p-10 w-full">

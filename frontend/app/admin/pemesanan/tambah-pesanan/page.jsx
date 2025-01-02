@@ -1,15 +1,15 @@
 "use client";
 
 import React from "react";
-import Navbar from "../../(components)/Navbar";
-import Sidebar from "../../(components)/Sidebar";
+import Sidebar from "../../../(components)/Sidebar";
 import InputForm from "./InputForm";
 import Image from "next/image";
+import Header from "../../../(components)/Header";
 
 const PemesananForm = () => {
   return (
     <>
-      <Navbar />
+      <Header />
       <div className="flex flex-col lg:flex-row gap-6 p-6 sm:p-8 lg:p-10">
         <Sidebar />
         <div className="flex flex-col bg-green-50 rounded-3xl shadow-lg p-6 sm:p-8 lg:p-10 w-full lg:w-3/4">
