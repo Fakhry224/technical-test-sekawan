@@ -1,1 +1,34 @@
 ## Aplikasi Pemesanan Kendaraan
+
+Note: Aplikasi ini belum sepenuhnya bekerja dengan sempurna, integrasi backendnya masih perlu diperbaiki, dan beberapa fitur yang masih belum bisa dijalankan
+
+## List User
+
+email:approver2@example.com, password:18p3Wj8vbwEK
+email:approver1@example.com, password:wv2HEiVSY3fq
+email:admin@example.com, password:wMk0A8UsovPa
+
+## Database Version:
+
+MySQL v8.0.33
+
+## PHP Version:
+
+PHP v8.2.24
+
+## Framework:
+
+Laravel 11
+Next JS 15
+
+## Panduan penggunaan aplikasi
+
+1. Masuk ke halaman login terlebih dahulu
+2. Login menggunakan akun yang telah disediakan
+3. Kemudian masuk halaman pemesanan, untuk melakukan pemesanan kendaraan
+   - Kemudian Isi form sesuai data yang diperlukan
+   - Klik tombol buat pesanan
+   - Lakukan konfirmasi terlebih dahulu
+   - Kemudian pesanan akan masuk ke halaman approver dan juga riwayat order
+4. Masuk halaman kendaraan untuk memanage kendaraan yang tersedia, selain itu juga terdapat fitur untuk menambah jadwal servis kendaraan
+5. Masuk halaman laporan untuk melihat laporan dalam bentuk excel (fitur masih belum berfungsi dengan benar)
