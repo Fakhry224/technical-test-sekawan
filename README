@@ -18,8 +18,10 @@ PHP v8.2.24
 
 ## Framework:
 
-Laravel 11
-Next JS 15
+Laravel '11'
+NextJS '15'
+npm '10.8.3',
+node '22.9.0'
 
 ## Panduan penggunaan aplikasi
 
